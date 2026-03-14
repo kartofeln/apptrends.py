@@ -4,6 +4,9 @@ import requests
 import json
 import base64
 
+# Crédito al final de la app (cámbialo por tu nombre o enlace a LinkedIn)
+HECHO_POR = "Hecho por [tu nombre o enlace a LinkedIn]"
+
 # Detectar si hay Secrets (producción): entonces ocultar sidebar por completo
 try:
     st.secrets["API_LOGIN"]
@@ -216,3 +219,10 @@ with tab_seo:
 
     with st.expander("Ver todos los datos"):
         st.dataframe(df_seo, use_container_width=True)
+
+# Pie de página en toda la app
+st.divider()
+st.markdown(
+    f'<p style="text-align: center; color: #666; font-size: 0.85rem;">{HECHO_POR}</p>',
+    unsafe_allow_html=True
+)
