@@ -4,8 +4,8 @@ import requests
 import json
 import base64
 
-# Crédito al final de la app (cámbialo por tu nombre o enlace a LinkedIn)
-HECHO_POR = "Hecho por [tu nombre o enlace a LinkedIn]"
+# Crédito al final de la app
+HECHO_POR = 'Hecho por <a href="https://www.linkedin.com/in/fernando-egido-adrian-8972355b/" target="_blank">Fernando Egido Adrián</a>'
 
 # Detectar si hay Secrets (producción): entonces ocultar sidebar por completo
 try:
