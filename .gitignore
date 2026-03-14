@@ -1,0 +1,14 @@
+# Streamlit secrets (nunca subir a GitHub)
+.streamlit/secrets.toml
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.env
+
+# IDE
+.idea/
+.vscode/
+*.swp
