@@ -18,8 +18,7 @@ st.set_page_config(
 )
 st.title("Tourism Demand Index")
 
-# En producción: ocultar sidebar, menú, cabecera y barra de herramientas (no se ve tu correo)
-# La barra también se oculta con .streamlit/config.toml → toolbarMode = "minimal"
+# En producción: ocultar sidebar, menú, cabecera y que nadie vea tu correo
 if _usar_secrets:
     st.markdown("""
         <style>
@@ -33,6 +32,19 @@ if _usar_secrets:
             #MainMenu { visibility: hidden !important; }
             footer { visibility: hidden !important; }
             header { visibility: hidden !important; }
+            /* Capa que tapa la barra superior donde Streamlit Cloud muestra el correo */
+            .stApp::before {
+                content: "";
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                height: 56px;
+                background: #ffffff;
+                z-index: 999999;
+                pointer-events: none;
+            }
+            [data-testid="stAppViewContainer"] { padding-top: 0 !important; }
         </style>
     """, unsafe_allow_html=True)
 
