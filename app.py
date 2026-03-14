@@ -4,19 +4,37 @@ import requests
 import json
 import base64
 
-st.set_page_config(page_title="Tourism Demand Index", layout="wide")
+# Detectar si hay Secrets (producción): entonces ocultar sidebar por completo
+try:
+    st.secrets["API_LOGIN"]
+    _usar_secrets = True
+except Exception:
+    _usar_secrets = False
+
+st.set_page_config(
+    page_title="Tourism Demand Index",
+    layout="wide",
+    initial_sidebar_state="collapsed" if _usar_secrets else "auto"
+)
 st.title("Tourism Demand Index")
 
-# En producción (con Secrets): ocultar sidebar para que no se vea nada en el margen
-def _hide_sidebar_if_public():
-    try:
-        st.secrets["API_LOGIN"]
-        st.markdown("""
-            <style> [data-testid="stSidebar"] { display: none; } </style>
-        """, unsafe_allow_html=True)
-    except Exception:
-        pass
-_hide_sidebar_if_public()
+# En producción: ocultar sidebar, menú, cabecera y barra de herramientas (no se ve tu correo)
+# La barra también se oculta con .streamlit/config.toml → toolbarMode = "minimal"
+if _usar_secrets:
+    st.markdown("""
+        <style>
+            [data-testid="stSidebar"] { display: none !important; width: 0 !important; }
+            section[data-testid="stSidebar"] { display: none !important; }
+            [data-testid="collapsedControl"] { display: none !important; }
+            .stApp [data-testid="stSidebar"] { display: none !important; }
+            header[data-testid="stHeader"] { display: none !important; }
+            [data-testid="stHeader"] { display: none !important; }
+            [data-testid="stToolbar"] { display: none !important; }
+            #MainMenu { visibility: hidden !important; }
+            footer { visibility: hidden !important; }
+            header { visibility: hidden !important; }
+        </style>
+    """, unsafe_allow_html=True)
 
 # ── Credenciales (solo desarrollo; en producción no se muestra nada en sidebar)
 def get_credentials():
